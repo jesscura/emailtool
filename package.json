@@ -1,0 +1,16 @@
+{
+  "name": "sagestoneemailtool",
+  "version": "1.0.0",
+  "description": "SageStone Email Tool Monorepo",
+  "private": true,
+  "scripts": {
+    "start:docker": "docker-compose up -d",
+    "stop:docker": "docker-compose down",
+    "build": "pnpm --filter backend build",
+    "dev": "pnpm --filter backend dev",
+    "migrate:dev": "pnpm --filter prisma migrate dev"
+  },
+  "devDependencies": {
+    "pnpm": "^9.1.4"
+  }
+}
