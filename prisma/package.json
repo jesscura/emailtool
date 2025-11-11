@@ -1,0 +1,19 @@
+{
+  "name": "prisma",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prisma schema and migrations for the SageStone Email Tool",
+  "main": "index.js",
+  "scripts": {
+    "migrate:dev": "prisma migrate dev",
+    "generate": "prisma generate"
+  },
+  "dependencies": {
+    "prisma": "^5.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

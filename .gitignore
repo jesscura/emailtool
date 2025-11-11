@@ -1,0 +1,28 @@
+# Dependencies
+/node_modules
+/backend/dist
+/backend/node_modules
+
+# pnpm
+/backend/pnpm-lock.yaml
+
+# Environment
+.env
+.env.*.local
+!*.example
+
+# Docker
+.dockerignore
+
+# Prisma
+/prisma/migrations
+/prisma/client
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.ios/
+.android/
+/build
