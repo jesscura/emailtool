@@ -4,8 +4,8 @@
   "description": "SageStone Email Tool Monorepo",
   "private": true,
   "scripts": {
-    "start:docker": "docker-compose up -d",
-    "stop:docker": "docker-compose down",
+    "start:docker": "docker compose up -d",
+    "stop:docker": "docker compose down",
     "build": "pnpm --filter backend build",
     "dev": "pnpm --filter backend dev",
     "migrate:dev": "pnpm --filter prisma migrate dev"
