@@ -11,6 +11,6 @@
     "migrate:dev": "pnpm --filter prisma migrate dev"
   },
   "devDependencies": {
-    "pnpm": "^10.21.0"
+    "pnpm": "^10.0.0"
   }
 }
