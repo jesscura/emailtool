@@ -1,39 +1,75 @@
-SageStone Email ToolWelcome to the SageStone Email Tool, a modern, production-ready email marketing platform.This repository contains the full monorepo for the SageStone Email Tool, including:flutter_app/: A cross-platform frontend built with Flutter. It provides a native experience for web, desktop (macOS, Windows, Linux), and mobile (iOS, Android).backend/: The complete backend API (NestJS), background workers (BullMQ), and shared packages, ported from the original ssemail project.prisma/: The unified database schema (PostgreSQL) for the entire application.🚀 Quick Start (Local Development)This guide assumes you have Node.js (v18+), pnpm, Flutter (v3.19+), and Docker installed.1. Start Backend ServicesThe backend relies on PostgreSQL and Redis. You can start them easily using Docker.# From the root directory
 docker-compose up -d
-2. Set Up the BackendThe backend (API and workers) is a Node.js project.# Navigate to the backend
-cd backend
+## SageStone Email Tool
 
-# Install all Node.js dependencies
+Welcome to the SageStone Email Tool, a modern, production-ready email marketing platform.
+
+This monorepo contains:
+- `backend/` – NestJS API (`apps/api`), BullMQ workers (`apps/workers`), and shared packages (`packages/email`, `packages/billing`).
+- `flutter_app/` – Cross‑platform Flutter frontend (web, desktop, mobile).
+- `prisma/` – Unified PostgreSQL database schema and migrations.
+
+---
+## 🚀 Quick Start (Local Development)
+Requirements: Node.js v18+, pnpm, Flutter v3.19+, Docker (for Postgres + Redis).
+
+### 1. Start Infrastructure (Postgres + Redis)
+```bash
+docker compose up -d
+```
+
+### 2. Install Dependencies
+At the repository root (uses pnpm workspaces):
+```bash
 pnpm install
+```
 
-# Copy environment files
-cp apps/api/.env.example apps/api/.env
-cp apps/workers/.env.example apps/workers/.env
+### 3. Environment Configuration
+Create environment files as needed (examples recommended – create them if missing):
+```bash
+cp backend/apps/api/.env.example backend/apps/api/.env || true
+cp backend/apps/workers/.env.example backend/apps/workers/.env || true
+```
+Edit the `.env` files and set:
+```
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ssemail?schema=public"
+```
 
-# --- IMPORTANT ---
-# Edit the .env files to add your database URL and other secrets.
-# The default DATABASE_URL should be:
-# DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ssemail?schema=public"
+### 4. Database Migrations & Prisma Client
+```bash
+pnpm --filter prisma run migrate:dev
+pnpm --filter prisma run generate
+```
 
-# Run database migrations
-pnpm exec prisma migrate dev --name init
+### 5. Build Backend (Monorepo)
+You can build via the aggregation package or per app:
+```bash
+# Build both apps via Nest CLI (aggregation)
+pnpm --filter backend run build
 
-# Build all backend packages
-pnpm build
+# OR build individually
+pnpm --filter api run build
+pnpm --filter workers run build
+```
 
-# Start the backend (API and workers)
-pnpm dev
-Your NestJS API is now running at http://localhost:3000.3. Run the Flutter AppIn a new terminal window:# Navigate to the Flutter app
+### 6. Run Backend in Dev Mode
+```bash
+pnpm --filter backend run dev
+```
+API will be available at: http://localhost:3000
+
+### 7. Run Flutter App
+```bash
 cd flutter_app
-
-# Install Flutter dependencies
 flutter pub get
+flutter run -d chrome      # Web
+flutter run -d macos       # macOS
+flutter run                # Mobile (device/simulator)
+```
 
-# Run the app on your desired platform
-flutter run -d chrome  # For Web
-flutter run -d macos   # For macOS
-flutter run            # For a connected mobile device/simulator
-📁 Project StructureSageStoneEmailTool/
+---
+## 📁 Project Structure
+```
+SageStoneEmailTool/
 ├── backend/
 │   ├── apps/
 │   │   ├── api/          # NestJS backend API (Port 3000)
@@ -63,3 +99,30 @@ flutter run            # For a connected mobile device/simulator
 ├── docker-compose.yml    # Local dev services (Postgres, Redis)
 ├── package.json          # Root package.json (for pnpm)
 └── README.md             # This file
+```
+
+---
+## 🧪 Smoke Test
+A simple way to verify the API builds and starts:
+```bash
+pnpm --filter backend run build && pnpm --filter backend run dev:api
+```
+You should see: `API server listening on port 3000`.
+
+---
+## ✅ Notes & Improvements
+- Added `tsconfig.json` at repo root for shared compiler config.
+- Added `pnpm-workspace.yaml` at root for proper workspace scoping.
+- Introduced `nest-cli.json` to define `api` and `workers` projects.
+- Created minimal `AppModule` and `WorkersModule`.
+- Added app-level `package.json` files for `api` and `workers` to resolve dependencies locally.
+
+Future enhancements:
+- Add authentication & authorization layer.
+- Implement proper email provider integration in `packages/email`.
+- Add billing integration (Stripe) in `packages/billing`.
+- Introduce Jest tests and CI workflow.
+
+---
+## 📄 License
+Proprietary – internal SageStone tooling (adjust this section as needed).
