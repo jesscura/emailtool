@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install": "pnpm install",
-    "build": "pnpm --filter './apps/*' build",
-    "dev": "pnpm --filter 'apps/api' dev & pnpm --filter 'apps/workers' dev"
+    "build": "nest build api && nest build workers",
+    "dev:api": "nest start --watch api",
+    "dev:workers": "nest start --watch workers",
+    "dev": "pnpm run dev:api & pnpm run dev:workers"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
