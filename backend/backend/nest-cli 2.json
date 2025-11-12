@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "projects": {
+    "api": {
+      "type": "application",
+      "root": "apps/api",
+      "entryFile": "main",
+      "sourceRoot": "apps/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api/tsconfig.json"
+      }
+    },
+    "workers": {
+      "type": "application",
+      "root": "apps/workers",
+      "entryFile": "main",
+      "sourceRoot": "apps/workers/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/workers/tsconfig.json"
+      }
+    }
+  }
+}
